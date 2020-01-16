@@ -192,9 +192,13 @@ class FrontWindow:
                 if inputFromPort == b'':
                     if wasLastStringEmpty:
                         if time.time() - start >= timeout:
+                            infoMsg = 'Timeout expired'
+                            messagebox.showinfo('Message', infoMsg)
                             break
                         else:
                             continue
+                    else:
+                        break
                 else:
                     wasLastStringEmpty = False
 
@@ -219,9 +223,8 @@ class FrontWindow:
             messagebox.showinfo('Error', errorMsg)
 
     def callbackSaveBtn(self):
-        filename = filedialog.askopenfilename(title='Select file',
-                                              filetypes=(('text files', '*.txt'),
-                                                         ('all files', '*.*')))
+        fileTypes = (('text files', '*.txt'), ('all files', '*.*'))
+        filename = filedialog.asksaveasfilename(title='Select file', filetypes=fileTypes)
 
         try:
             txtFile = open(filename, 'w+')
